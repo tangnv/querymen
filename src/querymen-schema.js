@@ -92,13 +92,14 @@ export default class QuerymenSchema {
           return query
         }
       },
-      limit: {
+      skip: {
         type: Number,
-        default: 30,
-        max: 100,
-        min: 1,
+        default: 0,
+        min: 0,
         bindTo: 'cursor',
-        parse: (value) => ({limit: value})
+        parse: function parse(value) {
+          return { skip: value }
+        }
       },
       page: {
         type: Number,
@@ -110,14 +111,13 @@ export default class QuerymenSchema {
           return { skip: this.param('skip').value() || this.param('limit').value() * (value - 1) }
         }
       },
-      skip: {
+      limit: {
         type: Number,
-        default: 0,
-        min: 0,
+        default: 30,
+        max: 100,
+        min: 1,
         bindTo: 'cursor',
-        parse: function parse(value) {
-          return { skip: value }
-        }
+        parse: (value) => ({limit: value})
       },
       sort: {
         type: [String],
