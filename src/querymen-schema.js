@@ -99,7 +99,7 @@ export default class QuerymenSchema {
         min: 1,
         bindTo: 'cursor',
         parse: (value, path, operator, param) => {
-          return { skip: _this.param('skip').value() || _this.param('limit').value() * (value - 1) }
+          return { skip: this.param('skip').value() || this.param('limit').value() * (value - 1) }
         }
       },
       limit: {
