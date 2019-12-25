@@ -2,10 +2,11 @@
   "name": "querymen",
   "version": "2.1.3",
   "description": "Querystring parser middleware for MongoDB, Express and Nodejs",
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "files": [
     "bin/",
-    "dist/"
+    "dist/",
+    "src"
   ],
   "scripts": {
     "clean": "rimraf dist",
