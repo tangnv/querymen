@@ -35,7 +35,7 @@ var QuerymenSchema = function () {
    * @param {Object} [options] - Options object.
    */
   function QuerymenSchema() {
-    var _this2 = this;
+    var _this = this;
 
     var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -88,13 +88,13 @@ var QuerymenSchema = function () {
         min_distance: true,
         geojson: true,
         format: function format(value, param) {
-          if (param.option('min_distance') && !_this2.param('min_distance')) {
-            _this2.param('min_distance', null, { type: Number, min: 0, parse: function parse() {
+          if (param.option('min_distance') && !_this.param('min_distance')) {
+            _this.param('min_distance', null, { type: Number, min: 0, parse: function parse() {
                 return false;
               } });
           }
-          if (param.option('max_distance') && !_this2.param('max_distance')) {
-            _this2.param('max_distance', null, { type: Number, parse: function parse() {
+          if (param.option('max_distance') && !_this.param('max_distance')) {
+            _this.param('max_distance', null, { type: Number, parse: function parse() {
                 return false;
               } });
           }
@@ -102,8 +102,8 @@ var QuerymenSchema = function () {
         },
         parse: function parse(value, path, operator, param) {
           var query = _defineProperty({}, path, { $near: {} });
-          var minDistance = _this2.param('min_distance');
-          var maxDistance = _this2.param('max_distance');
+          var minDistance = _this.param('min_distance');
+          var maxDistance = _this.param('max_distance');
           if (param.option('geojson')) {
             query[path].$near = { $geometry: { type: 'Point', coordinates: [value[1], value[0]] } };
             if (minDistance && minDistance.value()) {
@@ -121,7 +121,7 @@ var QuerymenSchema = function () {
               query[path].$maxDistance = maxDistance.value() / 6371000;
             }
           }
-          _this2.option('sort', false);
+          _this.option('sort', false);
           return query;
         }
       },
@@ -178,12 +178,12 @@ var QuerymenSchema = function () {
     var keys = _lodash2.default.union(_lodash2.default.keys(this._params), _lodash2.default.keys(params));
 
     keys.forEach(function (key) {
-      return _this2.add(key, undefined, params[key]);
+      return _this.add(key, undefined, params[key]);
     });
 
     _lodash2.default.forIn(_3.default.handlers, function (typedHandler, type) {
       _lodash2.default.forIn(typedHandler, function (handler, name) {
-        _this2.handler(type, name, handler);
+        _this.handler(type, name, handler);
       });
     });
   }
@@ -365,14 +365,14 @@ var QuerymenSchema = function () {
   }, {
     key: 'parse',
     value: function parse() {
-      var _this3 = this;
+      var _this2 = this;
 
       var values = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
       var query = {};
 
       _lodash2.default.forIn(this.params, function (param) {
-        var value = values[_this3._getQueryParamName(param.name)];
+        var value = values[_this2._getQueryParamName(param.name)];
 
         if (!_lodash2.default.isNil(value)) {
           param.value(value);
@@ -380,7 +380,7 @@ var QuerymenSchema = function () {
       });
 
       _lodash2.default.forIn(this.params, function (param) {
-        if (_this3.options[_this3._getSchemaParamName(param.name)] === false) return;
+        if (_this2.options[_this2._getSchemaParamName(param.name)] === false) return;
         var bind = param.options.bindTo;
 
         query[bind] = _lodash2.default.merge(query[bind], param.parse());
@@ -399,7 +399,7 @@ var QuerymenSchema = function () {
   }, {
     key: 'validate',
     value: function validate() {
-      var _this4 = this;
+      var _this3 = this;
 
       var values = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var next = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function (error) {
@@ -414,7 +414,7 @@ var QuerymenSchema = function () {
       }
 
       _lodash2.default.forIn(this.params, function (param) {
-        var value = values[_this4._getQueryParamName(param.name)];
+        var value = values[_this3._getQueryParamName(param.name)];
 
         if (!_lodash2.default.isNil(value)) {
           param.value(value);
