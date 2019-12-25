@@ -125,16 +125,6 @@ var QuerymenSchema = function () {
           return query;
         }
       },
-      page: {
-        type: Number,
-        default: 1,
-        max: 30,
-        min: 1,
-        bindTo: 'cursor',
-        parse: function parse(value, path, operator, param) {
-          return { skip: _this.param('skip').value() || _this.param('limit').value() * (value - 1) };
-        }
-      },
       limit: {
         type: Number,
         default: 30,
@@ -143,6 +133,16 @@ var QuerymenSchema = function () {
         bindTo: 'cursor',
         parse: function parse(value) {
           return { limit: value };
+        }
+      },
+      page: {
+        type: Number,
+        default: 1,
+        max: 30,
+        min: 1,
+        bindTo: 'cursor',
+        parse: function parse(value, path, operator, param) {
+          return { skip: _this.param('skip').value() || _this.param('limit').value() * (value - 1) };
         }
       },
       skip: {
